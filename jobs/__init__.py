@@ -1,5 +1,5 @@
 from nautobot.apps.jobs import register_jobs
-from .change_port import ChangePorts
+from .change_port import AddVlan
 
-jobs = [ChangePorts]
+jobs = [AddVlan]
 register_jobs(*jobs)

@@ -1,22 +1,23 @@
-from nautobot.apps.jobs import Job, StringVar, ObjectVar, MultiObjectVar, TextVar
+from nautobot.apps.jobs import (
+    Job,
+    StringVar,
+    ObjectVar,
+    IntegerVar,
+    MultiObjectVar,
+    TextVar,
+)
 from nautobot.dcim.models import Location, Device, DeviceType, Manufacturer, Interface
+from nautobot.ipam.models import VLAN
 from nautobot.extras.models import CustomField, Role, Status
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
 
 
-class ChangePorts(Job):
+class AddVlan(Job):
 
     class Meta:
-        name = "Choose Interface and Device"
-        description = """
-            This job does a number of interesting things.
-            
-            1. It takes your kids to work
-            2. It sets your coordinates for a jump to hyperspace
-            3. It codes for you
-        """
+        name = "Add a VLAN to a Site"
 
     location = ObjectVar(
         model=Location,
@@ -24,10 +25,11 @@ class ChangePorts(Job):
         required=True,
         description="Select a location",
     )
+    vlan_id = IntegerVar(description="Enter the VLAN ID", required=True)
+    vlan_name = TextVar(description="Enter the VLAN Name", required=True)
     device_name = StringVar(description="Enter the device name", required=True)
 
     def run(self, **data):
         location = data["location"]
-        device_name = data["device_name"]
 
         return "Job completed successfully"
