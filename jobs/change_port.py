@@ -1,11 +1,15 @@
-from nautobot.apps.jobs import Job, StringVar
+from nautobot.apps.jobs import Job, StringVar, ObjectVar, MultiObjectVar, TextVar
+from nautobot.dcim.models import Location, Device, DeviceType, Manufacturer, Interface
+from nautobot.extras.models import CustomField, Role, Status
+from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+from django.contrib.contenttypes.models import ContentType
 
 
 class ChangePorts(Job):
-    var1 = StringVar()
 
     class Meta:
-        name = "Glorbus"
+        name = "Choose Interface and Device"
         description = """
             This job does a number of interesting things.
             
@@ -14,7 +18,16 @@ class ChangePorts(Job):
             3. It codes for you
         """
 
-    def run(self, var1):
-        if var1 != "Star Wars is the best!":
-            self.logger.error("var1 must be 'Star Wars is the best!'")
-            raise Exception("Argument input validation failed.")
+    location = ObjectVar(
+        model=Location,
+        display_field="name",
+        required=True,
+        description="Select a location",
+    )
+    device_name = StringVar(description="Enter the device name", required=True)
+
+    def run(self, **data):
+        location = data["location"]
+        device_name = data["device_name"]
+
+        return "Job completed successfully"
