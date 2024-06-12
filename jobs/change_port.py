@@ -26,10 +26,14 @@ class AddVlan(Job):
         description="Select a location",
     )
     vlan_id = IntegerVar(description="Enter the VLAN ID", required=True)
-    vlan_name = TextVar(description="Enter the VLAN Name", required=True)
-    device_name = StringVar(description="Enter the device name", required=True)
+    vlan_name = StringVar(description="Enter the VLAN Name", required=True)
+    vlan_description = StringVar(
+        description="***Optional: Enter an SVI description.", required=False
+    )
 
     def run(self, **data):
         location = data["location"]
+        vlan_id = data["vlan_id"]
+        vlan_name = data["vlan_name"]
 
         return "Job completed successfully"
