@@ -1,4 +1,4 @@
-from nautobot.apps.jobs import Job, StringVar, register_jobs
+from nautobot.apps.jobs import Job, StringVar
 
 
 class ChangePorts(Job):
@@ -18,6 +18,3 @@ class ChangePorts(Job):
         if var1 != "Star Wars is the best!":
             self.logger.error("var1 must be 'Star Wars is the best!'")
             raise Exception("Argument input validation failed.")
-
-
-register_jobs(ChangePorts)
