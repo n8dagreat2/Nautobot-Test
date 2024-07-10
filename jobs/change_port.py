@@ -1,4 +1,4 @@
-from nautobot.apps.jobs import (
+from nautobot.extras.jobs import (
     Job,
     StringVar,
     ObjectVar,
